@@ -3,6 +3,27 @@ from typing import TypedDict
 from httpx import Response
 
 from clients.api_client import APIClient
+from clients.private_http_builder import get_private_http_client, AuthenticationUserDict
+
+
+# Добавили описание структуры пользователя
+class User(TypedDict):
+    """
+    Описание структуры пользователя.
+    """
+    id: str
+    email: str
+    lastName: str
+    firstName: str
+    middleName: str
+
+
+# Добавили описание структуры ответа получения пользователя
+class GetUserResponseDict(TypedDict):
+    """
+    Описание структуры ответа получения пользователя.
+    """
+    user: User
 
 
 class UpdateUserRequestDict(TypedDict):
@@ -56,25 +77,17 @@ class PrivateUsersClient(APIClient):
         """
         return self.delete(f"/api/v1/users/{user_id}")
 
+    # Добавили новый метод
+    def get_user(self, user_id: str) -> GetUserResponseDict:
+        response = self.get_user_api(user_id)
+        return response.json()
 
 
-# С паттерном Facade все API вызовы инкапсулируются в один класс:
-# class UsersClient:
-#     def __init__(self, base_url: str):
-#         self.client = httpx.Client(base_url=base_url)
-#
-#     def get_user(self, user_id: str):
-#         return self.client.get(f"/api/v1/users/{user_id}")
-#
-#     def update_user(self, user_id: str, data: dict):
-#         return self.client.patch(f"/api/v1/users/{user_id}", json=data)
-#
-#     def delete_user(self, user_id: str):
-#         return self.client.delete(f"/api/v1/users/{user_id}")
+def get_private_users_client(user: AuthenticationUserDict) -> PrivateUsersClient:
+    """
+    Функция создаёт экземпляр PrivateUsersClient с уже настроенным HTTP-клиентом.
 
-# Теперь клиентский код выглядит чисто и понятно:
-# client = UsersClient(base_url="https://example.com")
-#
-# response = client.get_user(user_id)
-# response = client.update_user(user_id, {"email": "new@example.com"})
-# response = client.delete_user(user_id)
+    :return: Готовый к использованию PrivateUsersClient.
+    """
+    return PrivateUsersClient(client=get_private_http_client(user))
+
