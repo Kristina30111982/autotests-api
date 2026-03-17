@@ -32,7 +32,6 @@ def assert_equal(actual: Any, expected: Any, name: str):
     )
 
 
-
 def assert_is_true(actual: Any, name: str):
     """
     Проверяет, что фактическое значение является истинным.
