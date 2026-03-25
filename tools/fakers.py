@@ -28,13 +28,19 @@ class Fake:
         """
         return self.faker.uuid4()
 
-    def email(self) -> str:
+    # Остальной код без изменений
+
+    def email(self, domain: str | None = None) -> str:
         """
         Генерирует случайный email.
 
+        :param domain: Домен электронной почты (например, "example.com").
+        Если не указан, будет использован случайный домен.
         :return: Случайный email.
         """
-        return self.faker.email()
+        return self.faker.email(domain=domain)
+
+    # Остальной код без изменений
 
     def sentence(self) -> str:
         """
