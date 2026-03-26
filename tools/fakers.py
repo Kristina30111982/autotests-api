@@ -28,8 +28,6 @@ class Fake:
         """
         return self.faker.uuid4()
 
-    # Остальной код без изменений
-
     def email(self, domain: str | None = None) -> str:
         """
         Генерирует случайный email.
@@ -39,8 +37,6 @@ class Fake:
         :return: Случайный email.
         """
         return self.faker.email(domain=domain)
-
-    # Остальной код без изменений
 
     def sentence(self) -> str:
         """
@@ -117,5 +113,4 @@ class Fake:
         return self.integer(1, 30)
 
 
-# Создаем экземпляр класса Fake с использованием Faker
 fake = Fake(faker=Faker())
