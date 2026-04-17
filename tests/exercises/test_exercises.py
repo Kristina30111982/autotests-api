@@ -1,45 +1,46 @@
-import pytest
 from http import HTTPStatus
+
+import pytest
+
 from clients.exercises.exercises_client import ExercisesClient
-from tools.assertions.exercises import assert_create_exercise_response
-from clients.exercises.exercises_schema import CreateExerciseResponseSchema, CreateExerciseRequestSchema
+from clients.exercises.exercises_schema import ExerciseSchema, CreateExerciseRequestSchema, CreateExerciseResponseSchema, GetExerciseResponseSchema
+from fixtures.courses import CourseFixture
 from fixtures.exercises import ExerciseFixture
 from tools.assertions.base import assert_status_code
+from tools.assertions.exercises import assert_create_exercise_response, assert_get_exercise_response
 from tools.assertions.schema import validate_json_schema
 
 
 @pytest.mark.exercises
 @pytest.mark.regression
 class TestExercises:
-    """Класс с тестами для упражнений."""
+    def test_create_exercise(
+            self,
+            function_course: CourseFixture,
+            exercises_client: ExercisesClient
+    ):
+        request = CreateExerciseRequestSchema(course_id=function_course.response.course.id)
+        response = exercises_client.create_exercise_api(request)
+        response_data = CreateExerciseResponseSchema.model_validate_json(response.text)
 
-    def test_create_exercise(self, exercises_client: ExercisesClient, function_course):
-        """
-        Тест на успешное создание упражнения.
+        assert_status_code(response.status_code, HTTPStatus.OK)
+        assert_create_exercise_response(request, response_data)
 
-        Шаги:
-        1. Сформировать данные для создания упражнения.
-        2. Выполнить POST запрос /api/v1/exercises.
-        3. Проверить статус-код 200.
-        4. Проверить тело ответа и JSON-схему.
-        """
-        request_data = CreateExerciseRequestSchema(
-            title="Новое упражнение",
-            description="Описание тестового упражнения",
-            course_id=function_course.response.course.id
+        validate_json_schema(response.json(), CreateExerciseResponseSchema.model_json_schema())
+
+    def test_get_exercise(self, exercises_client: ExercisesClient, function_exercise):
+        expected_exercise = function_exercise.response.exercise
+        exercise_id = expected_exercise.id
+
+        response = exercises_client.get_exercise_api(exercise_id=exercise_id)
+
+        assert_status_code(response.status_code, HTTPStatus.OK)
+
+        # Эта функция проверяет логику (поля)
+        assert_get_exercise_response(
+            response_data=response.json(),
+            expected_exercise=expected_exercise
         )
 
-        # Выполнение запроса
-        response_model = exercises_client.create_exercise(request=request_data)
-
-        # 3. Проверка тела ответа через функцию-ассерт
-        # Превращаем модель ответа в dict для ассерта, используя model_dump() или .dict()
-        assert_create_exercise_response(
-            response_data=response_model.model_dump(),
-            request_data=request_data.model_dump()
-        )
-
-
-
-
-
+        # Эта функция проверяет структуру (JSON Schema)
+        validate_json_schema(response.json(), GetExerciseResponseSchema.model_json_schema())

@@ -31,6 +31,13 @@ class GetCoursesQuerySchema(BaseModel):
     user_id: str = Field(alias="userId")
 
 
+class GetCoursesResponseSchema(BaseModel):
+    """
+    Описание структуры ответа при получении списка курсов.
+    """
+    courses: list[CourseSchema]
+
+
 class CreateCourseRequestSchema(BaseModel):
     """
     Описание структуры запроса на создание курса.
