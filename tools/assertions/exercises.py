@@ -1,4 +1,5 @@
-from clients.exercises.exercises_schema import CreateExerciseRequestSchema, CreateExerciseResponseSchema, GetExerciseResponseSchema, ExerciseSchema
+from clients.exercises.exercises_schema import ExerciseSchema, CreateExerciseRequestSchema, \
+    CreateExerciseResponseSchema, GetExerciseResponseSchema, UpdateExerciseRequestSchema, UpdateExerciseResponseSchema
 from tools.assertions.base import assert_equal
 
 
@@ -22,23 +23,51 @@ def assert_create_exercise_response(
     assert_equal(response.exercise.estimated_time, request.estimated_time, "estimated_time")
 
 
-def assert_exercise(expected_exercise: ExerciseSchema, actual_exercise_data: dict):
+def assert_exercise(actual: ExerciseSchema, expected: ExerciseSchema):
     """
-    Сравнивает модель упражнения с данными из ответа.
+    Проверяет, что фактические данные задания соответствуют ожидаемым.
+
+    :param actual: Фактические данные задания.
+    :param expected: Ожидаемые данные задания.
+    :raises AssertionError: Если хотя бы одно поле не совпадает.
     """
-    assert actual_exercise_data["id"] == expected_exercise.id
-    assert actual_exercise_data["title"] == expected_exercise.title
-    assert actual_exercise_data["description"] == expected_exercise.description
-    assert actual_exercise_data["courseId"] == expected_exercise.course_id
+    assert_equal(actual.id, expected.id, "id")
+    assert_equal(actual.title, expected.title, "title")
+    assert_equal(actual.course_id, expected.course_id, "course_id")
+    assert_equal(actual.max_score, expected.max_score, "max_score")
+    assert_equal(actual.min_score, expected.min_score, "min_score")
+    assert_equal(actual.order_index, expected.order_index, "order_index")
+    assert_equal(actual.description, expected.description, "description")
+    assert_equal(actual.estimated_time, expected.estimated_time, "estimated_time")
 
 
-def assert_get_exercise_response(response_data: dict, expected_exercise: ExerciseSchema):
+def assert_get_exercise_response(
+        get_exercise_response: GetExerciseResponseSchema,
+        create_exercise_response: CreateExerciseResponseSchema
+):
     """
-    Проверяет ответ GET-запроса на соответствие схеме и ожидаемым данным.
-    """
-    # Валидация JSON-схемы
-    GetExerciseResponseSchema(**response_data)
+    Проверяет, что ответ на получение задания соответствует ответу на его создание.
 
-    # Проверка данных упражнения (с учетом вложенности 'exercise')
-    actual_exercise = response_data["exercise"]
-    assert_exercise(expected_exercise, actual_exercise)
+    :param get_exercise_response: Ответ API при запросе данных задания.
+    :param create_exercise_response: Ответ API при создании задания.
+    :raises AssertionError: Если данные задания не совпадают.
+    """
+    assert_exercise(get_exercise_response.exercise, create_exercise_response.exercise)
+
+
+def assert_update_exercise_response(
+        request: UpdateExerciseRequestSchema,
+        response: UpdateExerciseResponseSchema
+):
+    """
+    Проверяет, что ответ на обновление задания соответствует запросу.
+
+    :param request: Исходный запрос на обновление.
+    :param response: Ответ API с данными .
+    :raises AssertionError: Если хотя бы одно поле не совпадает.
+    """
+    assert_equal(response.exercise.title, request.title, "title")
+    assert_equal(response.exercise.max_score, request.max_score, "max_score")
+    assert_equal(response.exercise.min_score, request.min_score, "min_score")
+    assert_equal(response.exercise.description, request.description, "description")
+    assert_equal(response.exercise.estimated_time, request.estimated_time, "estimated_time")
