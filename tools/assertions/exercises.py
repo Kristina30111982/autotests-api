@@ -1,6 +1,6 @@
 from clients.exercises.exercises_schema import ExerciseSchema, CreateExerciseRequestSchema, \
     CreateExerciseResponseSchema, GetExerciseResponseSchema, UpdateExerciseRequestSchema, UpdateExerciseResponseSchema
-from tools.assertions.base import assert_equal
+from tools.assertions.base import assert_equal, assert_length
 from clients.errors_schema import InternalErrorResponseSchema
 
 
@@ -54,6 +54,23 @@ def assert_get_exercise_response(
     :raises AssertionError: Если данные задания не совпадают.
     """
     assert_exercise(get_exercise_response.exercise, create_exercise_response.exercise)
+
+
+def assert_get_exercises_response(
+        get_exercises_response: GetExerciseResponseSchema,
+        create_exercise_responses: list[CreateExerciseResponseSchema]
+):
+    """
+    Проверяет, что ответ на получение списка  соответствует ответам на их создание.
+
+    :param get_exercises_response: Ответ API при запросе списка .
+    :param create_exercise_responses: Список API ответов при создании .
+    :raises AssertionError: Если данные пользователя не совпадают.
+    """
+    assert_length(get_exercises_response.exercises, create_exercise_responses, "exercise")
+
+    for index, create_exercise_response in enumerate(create_exercise_responses):
+        assert_exercise(get_exercises_response.exercises[index], create_exercise_responses.exercise)
 
 
 def assert_update_exercise_response(
