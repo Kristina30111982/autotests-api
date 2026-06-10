@@ -1,0 +1,11 @@
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/courses' \
+  -H 'host: localhost:8000' \
+  -H 'accept: */*' \
+  -H 'accept-encoding: gzip, deflate' \
+  -H 'connection: keep-alive' \
+  -H 'user-agent: python-httpx/0.28.1' \
+  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmUiOiIyMDI2LTA2LTA5VDE1OjA0OjMyLjM0OTg4NCIsInVzZXJfaWQiOiI0YWRjODc3NS1iMTYxLTQ2MDktOGIwZC1kYTU2ZmM2OTU4YzYifQ.udB3Pm_xDsxWzbU9IOKkw53wMMmxWMycaDFD8AfVjpM' \
+  -H 'content-length: 420' \
+  -H 'content-type: application/json' \
+  -d '{"title":"Least order keep model surface.","maxScore":51,"minScore":3,"description":"Wonder meet often hand up four.\nBill kid sometimes professional rather whom south action. Coach there like suggest six answer their future. Everybody evening study appear third west amount fear.","estimatedTime":"2 weeks","previewFileId":"3d6e00d4-9f53-4c06-ae42-0213f2232f86","createdByUserId":"4adc8775-b161-4609-8b0d-da56fc6958c6"}'

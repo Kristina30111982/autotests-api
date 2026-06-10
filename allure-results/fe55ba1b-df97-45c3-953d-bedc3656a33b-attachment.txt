@@ -1,0 +1,11 @@
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/courses' \
+  -H 'host: localhost:8000' \
+  -H 'accept: */*' \
+  -H 'accept-encoding: gzip, deflate' \
+  -H 'connection: keep-alive' \
+  -H 'user-agent: python-httpx/0.28.1' \
+  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmUiOiIyMDI2LTA2LTA5VDE1OjA0OjU0LjAxMTQwNSIsInVzZXJfaWQiOiJlMmQ5ZmZjMy1iMDdkLTQ5NGMtOTM4My00NzYxY2I5ZTliYTgifQ.GsK4emOyb86l-2c6tD-7c9uD5mEIguuivsVFi2PqenU' \
+  -H 'content-length: 407' \
+  -H 'content-type: application/json' \
+  -d '{"title":"Open huge think memory oil seek.","maxScore":51,"minScore":29,"description":"Recent might nation several. Animal company cost dinner thousand focus part.\nClear yard major hold including high. Wife political rise section. Growth month responsibility people.","estimatedTime":"2 weeks","previewFileId":"82414787-7ea1-4ea0-8b75-4eb88a2b9b4e","createdByUserId":"e2d9ffc3-b07d-494c-9383-4761cb9e9ba8"}'

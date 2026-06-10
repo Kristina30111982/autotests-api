@@ -1,0 +1,11 @@
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/courses' \
+  -H 'host: localhost:8000' \
+  -H 'accept: */*' \
+  -H 'accept-encoding: gzip, deflate' \
+  -H 'connection: keep-alive' \
+  -H 'user-agent: python-httpx/0.28.1' \
+  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmUiOiIyMDI2LTA2LTA5VDE1OjA0OjEwLjczODk0NCIsInVzZXJfaWQiOiI5Njg5Y2IxNy1jMGEwLTRlY2MtYjJjMy01ZTlhZWMxNDQzYWQifQ.FYPv02s3ne9xvsa3jxNV4FSG-wjW-VvuZHgglKJAzdw' \
+  -H 'content-length: 374' \
+  -H 'content-type: application/json' \
+  -d '{"title":"Degree every company growth name accept far.","maxScore":81,"minScore":29,"description":"Choose later green spring through. Dog work feel world.\nMan argue their. Goal step ask of. Generation exactly wrong sister like scene.","estimatedTime":"9 weeks","previewFileId":"70d01fa1-260e-4511-a44a-f53dbf2406d9","createdByUserId":"9689cb17-c0a0-4ecc-b2c3-5e9aec1443ad"}'

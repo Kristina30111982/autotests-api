@@ -1,0 +1,11 @@
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/courses' \
+  -H 'host: localhost:8000' \
+  -H 'accept: */*' \
+  -H 'accept-encoding: gzip, deflate' \
+  -H 'connection: keep-alive' \
+  -H 'user-agent: python-httpx/0.28.1' \
+  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmUiOiIyMDI2LTA2LTA5VDE1OjA0OjI1LjE3NzQwNSIsInVzZXJfaWQiOiIzNWYwNGViYS1lYzdjLTRmMmQtOWY1ZS1hNmQ2N2JlZTM5OGEifQ.iP9yXkcSdh8WZgQiztmLim8X74I2SedgPma3v-Ochr8' \
+  -H 'content-length: 330' \
+  -H 'content-type: application/json' \
+  -d '{"title":"Section child form board late buy since.","maxScore":84,"minScore":7,"description":"Property couple than involve. Worry put total study. Station approach player financial magazine.","estimatedTime":"9 weeks","previewFileId":"43281bbb-38e0-4729-832a-8e46564bdf31","createdByUserId":"35f04eba-ec7c-4f2d-9f5e-a6d67bee398a"}'

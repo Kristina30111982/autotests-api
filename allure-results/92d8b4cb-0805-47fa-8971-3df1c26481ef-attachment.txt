@@ -1,0 +1,11 @@
+curl -X 'POST' \
+  'http://localhost:8000/api/v1/courses' \
+  -H 'host: localhost:8000' \
+  -H 'accept: */*' \
+  -H 'accept-encoding: gzip, deflate' \
+  -H 'connection: keep-alive' \
+  -H 'user-agent: python-httpx/0.28.1' \
+  -H 'authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJleHBpcmUiOiIyMDI2LTA2LTA5VDE1OjA0OjM5LjU3Mzg1NyIsInVzZXJfaWQiOiI4MDliNzUxOC0xODI5LTQ5MjQtODcwYS0yYzdhN2U3YTcyZWEifQ.YuChOK7qbigw8qz56hEkclFF4oklTGY4-IJBUaEBwsg' \
+  -H 'content-length: 417' \
+  -H 'content-type: application/json' \
+  -d '{"title":"Approach protect conference for trade.","maxScore":78,"minScore":1,"description":"Customer throughout he section stand happen for. Future but although trip hair accept another.\nGoal board test court the same. Respond school military three. Reality course TV deal on.","estimatedTime":"5 weeks","previewFileId":"aa5343c8-f21d-4983-9f91-bdd6e9e99b28","createdByUserId":"809b7518-1829-4924-870a-2c7a7e7a72ea"}'

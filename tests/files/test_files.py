@@ -17,7 +17,7 @@ from tools.allure.epics import AllureEpic  # Импортируем enum AllureE
 from tools.allure.features import AllureFeature  # Импортируем enum AllureFeature
 from tools.allure.stories import AllureStory  # Импортируем enum AllureStory
 from allure_commons.types import Severity  # Импортируем enum Severity из Allure
-
+from config import settings  # Импортируем настройки
 
 @pytest.mark.files
 @pytest.mark.regression
@@ -82,10 +82,9 @@ class TestFiles:
     @allure.severity(Severity.NORMAL)  # Добавили severity
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)  # allure.sub_suite == allure.story
     def test_create_file_with_empty_filename(self, files_client: FilesClient):
-        request = CreateFileRequestSchema(
-            filename="",
-            upload_file="./testdata/files/image.png"
-        )
+        request = CreateFileRequestSchema(upload_file=settings.test_data.image_png_file)
+
+
         response = files_client.create_file_api(request)
         response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
 
@@ -103,10 +102,8 @@ class TestFiles:
     @allure.severity(Severity.NORMAL)  # Добавили severity
     @allure.sub_suite(AllureStory.VALIDATE_ENTITY)
     def test_create_file_with_empty_directory(self, files_client: FilesClient):
-        request = CreateFileRequestSchema(
-            directory="",
-            upload_file="./testdata/files/image.png"
-        )
+        request = CreateFileRequestSchema(upload_file=settings.test_data.image_png_file)
+
         response = files_client.create_file_api(request)
         response_data = ValidationErrorResponseSchema.model_validate_json(response.text)
 

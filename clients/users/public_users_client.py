@@ -32,4 +32,3 @@ def get_public_users_client() -> PublicUsersClient:
     """
     return PublicUsersClient(client=get_public_http_client())
 
-

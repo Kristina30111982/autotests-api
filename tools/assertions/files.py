@@ -3,6 +3,8 @@ from clients.files.files_schema import CreateFileResponseSchema, CreateFileReque
 from tools.assertions.base import assert_equal, assert_validation_error_response
 from tools.assertions.errors import assert_validation_error_response
 import allure
+from config import settings  # Импортируем настройки
+
 
 @allure.step("Check file")  # Добавили allure шаг
 def assert_file(actual: FileSchema, expected: FileSchema):
@@ -11,14 +13,21 @@ def assert_file(actual: FileSchema, expected: FileSchema):
     assert_equal(actual.filename, expected.filename, "filename")
     assert_equal(actual.directory, expected.directory, "directory")
 
-@allure.step("Check create file response")  # Добавили allure шаг
-def assert_create_file_response(
-        actual_response: CreateFileResponseSchema,
-        expected_request: CreateFileRequestSchema
-):
-    # Проверяем, что созданный файл соответствует тому, что мы отправляли
-    assert_equal(actual_response.filename, expected_request.filename, "filename")
-    assert_equal(actual_response.directory, expected_request.directory, "directory")
+@allure.step("Check create file response")
+def assert_create_file_response(request: CreateFileRequestSchema, response: CreateFileResponseSchema):
+    """
+    Проверяет, что ответ на создание файла соответствует запросу.
+
+    :param request: Исходный запрос на создание файла.
+    :param response: Ответ API с данными файла.
+    :raises AssertionError: Если хотя бы одно поле не совпадает.
+    """
+    # Используем значение хоста из настроек
+    expected_url = f"{settings.http_client.client_url}static/{request.directory}/{request.filename}"
+
+    assert_equal(str(response.file.url), expected_url, "url")
+    assert_equal(response.file.filename, request.filename, "filename")
+    assert_equal(response.file.directory, request.directory, "directory")
 
 @allure.step("Check get file response")  # Добавили allure шаг
 def assert_get_file_response(
